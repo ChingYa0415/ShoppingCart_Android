@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TAG_MainActivity";
+    private static final int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
