@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homepage_to_register"
             app:destination="@id/member" />
+        <action
+            android:id="@+id/action_homepage_to_login"
+            app:destination="@id/login" />
     </fragment>
     <fragment
         android:id="@+id/member"
