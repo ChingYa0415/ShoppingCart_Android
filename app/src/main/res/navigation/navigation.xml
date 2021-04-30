@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homepage">
+    app:startDestination="@id/login">
 
     <fragment
         android:id="@+id/homepage"
-        android:name="com.example.shoppingcart.Homepage"
+        android:name="com.example.shoppingcart.homepage.Homepage"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" >
         <action
@@ -16,7 +16,17 @@
     </fragment>
     <fragment
         android:id="@+id/member"
-        android:name="com.example.shoppingcart.Register"
+        android:name="com.example.shoppingcart.member.Register"
         android:label="fragment_member"
         tools:layout="@layout/fragment_member" />
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.shoppingcart.member.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/register"
+        android:name="com.example.shoppingcart.member.SignUp"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

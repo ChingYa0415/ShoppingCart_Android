@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.main_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        
+        // 特定頁面隱藏BottomNavigation
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+
+        });
 
     }
 }
