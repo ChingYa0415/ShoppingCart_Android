@@ -1,4 +1,4 @@
-package com.example.shoppingcart.homepage;
+package com.example.shoppingCart.homepage;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shoppingcart.R;
+import com.example.shoppingCart.R;
 
 /**
  * A simple {@link Fragment} subclass.

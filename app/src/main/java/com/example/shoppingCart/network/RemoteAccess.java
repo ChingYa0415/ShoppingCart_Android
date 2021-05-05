@@ -1,4 +1,4 @@
-package com.example.shoppingcart.network;
+package com.example.shoppingCart.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;

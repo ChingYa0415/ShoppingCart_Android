@@ -1,4 +1,4 @@
-package com.example.shoppingcart.bean;
+package com.example.shoppingCart.bean;
 
 import java.sql.Timestamp;
 

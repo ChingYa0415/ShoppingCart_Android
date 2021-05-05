@@ -1,4 +1,4 @@
-package com.example.shoppingcart;
+package com.example.shoppingCart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -11,7 +11,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TAG_MainActivity";
-    private static final int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        NavController navController = Navigation.findNavController(this, R.id.main_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        // 特定頁面隱藏BottomNavigation
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            int id = destination.getId();
 
-        });
 
     }
 }

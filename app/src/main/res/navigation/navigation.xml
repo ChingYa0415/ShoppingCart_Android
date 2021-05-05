@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homepage">
+    app:startDestination="@id/login">
 
     <fragment
         android:id="@+id/homepage"
-        android:name="com.example.shoppingcart.homepage.Homepage"
+        android:name="com.example.shoppingCart.homepage.Homepage"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" >
+        tools:layout="@layout/fragment_homepage">
         <action
             android:id="@+id/action_homepage_to_register"
             app:destination="@id/userMember" />
@@ -19,27 +19,38 @@
     </fragment>
     <fragment
         android:id="@+id/userMember"
-        android:name="com.example.shoppingcart.userMember.Register"
+        android:name="com.example.shoppingCart.member.UserMember"
         android:label="fragment_member"
         tools:layout="@layout/fragment_member" />
     <fragment
         android:id="@+id/login"
-        android:name="com.example.shoppingcart.userMember.Login"
+        android:name="com.example.shoppingCart.member.Login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_userMember"
+            app:destination="@id/userMember" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/register" />
+    </fragment>
     <fragment
         android:id="@+id/register"
-        android:name="com.example.shoppingcart.userMember.SignUp"
+        android:name="com.example.shoppingCart.member.Register"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_takePhoto"
+            app:destination="@id/takePhoto" />
+    </fragment>
     <fragment
         android:id="@+id/takePhoto"
-        android:name="com.example.shoppingcart.member.TakePhoto"
+        android:name="com.example.shoppingCart.member.TakePhoto"
         android:label="fragment_take_photo"
         tools:layout="@layout/fragment_take_photo" />
     <fragment
         android:id="@+id/camera"
-        android:name="com.example.shoppingcart.member.Camera"
+        android:name="com.example.shoppingCart.member.Camera"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
 </navigation>

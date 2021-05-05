@@ -1,4 +1,4 @@
-package com.example.shoppingcart.network;
+package com.example.shoppingCart.network;
 
 import android.util.Log;
 

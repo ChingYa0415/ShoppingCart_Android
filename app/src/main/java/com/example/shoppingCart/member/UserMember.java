@@ -1,10 +1,9 @@
-package com.example.shoppingcart.member;
+package com.example.shoppingCart.member;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.shoppingcart.R;
-import com.example.shoppingcart.bean.Member;
+import com.example.shoppingCart.R;
 
 public class UserMember extends Fragment {
     SharedPreferences preferences;
@@ -52,7 +50,7 @@ public class UserMember extends Fragment {
 
         if (status == -1) {
             Toast.makeText(activity, "請先登入", Toast.LENGTH_LONG).show();
-            Navigation.findNavController(activity, R.id.main_fragment).navigate(R.id.login);
+            Navigation.findNavController(activity, R.id.fragment).navigate(R.id.login);
         }
     }
 }

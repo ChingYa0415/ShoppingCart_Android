@@ -1,4 +1,4 @@
-package com.example.shoppingcart.member;
+package com.example.shoppingCart.member;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,9 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.shoppingcart.R;
-import com.example.shoppingcart.bean.Member;
-import com.example.shoppingcart.network.RemoteAccess;
+import com.example.shoppingCart.R;
+import com.example.shoppingCart.bean.Member;
+import com.example.shoppingCart.network.RemoteAccess;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -48,12 +48,13 @@ public class Register extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initialize();
 
         etNickname = view.findViewById(R.id.etRegisterNickname);
         etAccount = view.findViewById(R.id.etRegisterAccount);
         etPassword = view.findViewById(R.id.etRegisterPassword);
         btNext = view.findViewById(R.id.btRegisterNext);
+
+        initialize();
 
         btNext.setOnClickListener(v -> {
             String nickname = etNickname.getText().toString().trim();
@@ -77,8 +78,9 @@ public class Register extends Fragment {
                 jsonObject.addProperty("member", new Gson().toJson(member));
 
                 String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
-                int check = 0;
-                check = Integer.parseInt(result);
+                Log.d(TAG, "result: " + result);
+                int check = 1;
+//                check = Integer.parseInt(result);
                 Log.d(TAG, "check: " + check);
 
                 if (check == 0) {

@@ -1,4 +1,4 @@
-package com.example.shoppingcart.member;
+package com.example.shoppingCart.member;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,9 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.shoppingcart.R;
-import com.example.shoppingcart.bean.Member;
-import com.example.shoppingcart.network.RemoteAccess;
+import com.example.shoppingCart.R;
+import com.example.shoppingCart.bean.Member;
+import com.example.shoppingCart.network.RemoteAccess;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -50,8 +50,7 @@ public class Login extends Fragment {
         etAccount = view.findViewById(R.id.etLoginAccount);
         etPassword = view.findViewById(R.id.etLoginPassword);
 
-        view.findViewById(R.id.btLoginLogin);
-        view.setOnClickListener(v -> {
+        view.findViewById(R.id.btLoginLogin).setOnClickListener(v -> {
             String account = etAccount.getText().toString();
             String password = etPassword.getText().toString();
 
