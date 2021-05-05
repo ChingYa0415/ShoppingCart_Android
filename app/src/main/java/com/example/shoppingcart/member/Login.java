@@ -104,10 +104,10 @@ public class Login extends Fragment {
                         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
                         Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
-                        Navigation.findNavController(v).navigate(R.id.member);
+                        Navigation.findNavController(v).navigate(R.id.userMember);
                 }
             } else {
-                Toast.makeText(activity, "無網路", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "無網路連線", Toast.LENGTH_LONG).show();
             }
         });
 

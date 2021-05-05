@@ -6,7 +6,7 @@
         android:icon="@drawable/homepage"
         android:title="@string/Menu_textHomepage" />
     <item
-        android:id="@+id/member"
+        android:id="@+id/userMember"
         android:icon="@drawable/user"
         android:title="@string/Menu_textMember" />
 </menu>

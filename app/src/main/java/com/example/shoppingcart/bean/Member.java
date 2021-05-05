@@ -16,6 +16,13 @@ public class Member {
         this.password = password;
     }
 
+    public Member(String account, String password, String nickname, int status) {
+        this.account = account;
+        this.password = password;
+        this.nickname = nickname;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

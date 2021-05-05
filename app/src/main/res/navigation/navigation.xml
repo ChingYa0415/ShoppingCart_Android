@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/login">
+    app:startDestination="@id/homepage">
 
     <fragment
         android:id="@+id/homepage"
@@ -12,24 +12,34 @@
         tools:layout="@layout/fragment_homepage" >
         <action
             android:id="@+id/action_homepage_to_register"
-            app:destination="@id/member" />
+            app:destination="@id/userMember" />
         <action
             android:id="@+id/action_homepage_to_login"
             app:destination="@id/login" />
     </fragment>
     <fragment
-        android:id="@+id/member"
-        android:name="com.example.shoppingcart.member.Register"
+        android:id="@+id/userMember"
+        android:name="com.example.shoppingcart.userMember.Register"
         android:label="fragment_member"
         tools:layout="@layout/fragment_member" />
     <fragment
         android:id="@+id/login"
-        android:name="com.example.shoppingcart.member.Login"
+        android:name="com.example.shoppingcart.userMember.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/register"
-        android:name="com.example.shoppingcart.member.SignUp"
+        android:name="com.example.shoppingcart.userMember.SignUp"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/takePhoto"
+        android:name="com.example.shoppingcart.member.TakePhoto"
+        android:label="fragment_take_photo"
+        tools:layout="@layout/fragment_take_photo" />
+    <fragment
+        android:id="@+id/camera"
+        android:name="com.example.shoppingcart.member.Camera"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>
