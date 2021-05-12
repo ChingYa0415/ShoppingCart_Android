@@ -2,6 +2,7 @@ package com.example.shoppingCart.member;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,15 +19,20 @@ import androidx.navigation.Navigation;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shoppingCart.R;
+import com.example.shoppingCart.network.RemoteAccess;
+import com.google.gson.JsonObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -38,7 +44,10 @@ public class TakePhoto extends Fragment {
     private static final int REQ_TAKE_PICTURE_LARGE = 1;
     private Activity activity;
     private File file;
-    private Button btTakePhoto;
+    private Button btComplete;
+    private ImageView ivPhoto;
+    private byte[] userPhoto;
+    private Bundle bundle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +66,10 @@ public class TakePhoto extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btTakePhoto = view.findViewById(R.id.btTakePhotoTakePhoto);
+        Button btTakePhoto = view.findViewById(R.id.btTakePhotoTakePhoto);
+        btComplete = view.findViewById(R.id.btTakePhotoComplete);
+        ivPhoto = view.findViewById(R.id.ivPhoto);
+        bundle = getArguments();
 
         btTakePhoto.setOnClickListener(v -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -72,11 +84,37 @@ public class TakePhoto extends Fragment {
             Uri contentUri = FileProvider.getUriForFile(activity,
                     activity.getPackageName() + ".provider", file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+            try {
+                startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(activity, "找不到camera app",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            /*
             if (intent.resolveActivity(activity.getPackageManager()) != null) {
                 startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
             } else {
                 Toast.makeText(activity, "找不到camera app", Toast.LENGTH_LONG).show();
             }
+            */
+
+        });
+
+        btComplete.setOnClickListener(v -> {
+            if (RemoteAccess.networkConnected(activity)) {
+                String url = RemoteAccess.URL_SERVER + "RegisterServlet";
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("action", "MemberInsert");
+                jsonObject.addProperty("memberAccount", bundle.getString("account", null));
+                if (userPhoto != null) {
+                    jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
+                    Log.d(TAG, "InsertImageBase64 SUCCESS!");
+                }
+                String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
+                Log.d(TAG, "Insert result: " + result);
+            }
+            Navigation.findNavController(btComplete).navigate(R.id.login);
         });
     }
 
@@ -105,11 +143,14 @@ public class TakePhoto extends Fragment {
                     ImageDecoder.Source source = ImageDecoder.createSource(file);
                     try {
                         Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
+                        ivPhoto.setImageBitmap(bitmap);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        userPhoto = stream.toByteArray();
                     } catch (IOException e) {
                         Log.d(TAG, e.toString());
                     }
                 }
-                Navigation.findNavController(btTakePhoto).popBackStack();
             }
         }
     }

@@ -18,5 +18,6 @@
     <string name="TakePhoto_textTakePhoto">照張相</string>
     <string name="TakePhoto_textText">使用人臉辨識，可以在下次登入時不需輸入帳號密碼即可登入。</string>
     <string name="TakePhoto_textDescription">1.   如有穿戴眼鏡，請先拿下。 2.   拍照時請保持正臉。</string>
-    <string name="TakePhoto_textComplete">跳過，完成註冊</string>
+    <string name="TakePhoto_textComplete">完成註冊</string>
+    <string name="TakePhoto_textSkipComplete">跳過，完成註冊</string>
 </resources>

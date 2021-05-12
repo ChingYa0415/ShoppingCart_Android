@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="48dp"
             android:text="@string/TakePhoto_textDescription"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:text="@string/TakePhoto_textTakePhoto"
@@ -67,17 +67,30 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTakePhotoDescription" />
 
         <Button
-            android:id="@+id/btTakePhotoNext"
+            android:id="@+id/btTakePhotoComplete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
+            android:layout_marginBottom="72dp"
             android:text="@string/TakePhoto_textComplete"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btTakePhotoTakePhoto" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/btTakePhotoTakePhoto"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/btTakePhotoTakePhoto"
+            app:layout_constraintTop_toBottomOf="@+id/btTakePhotoTakePhoto"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

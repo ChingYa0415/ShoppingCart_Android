@@ -48,9 +48,4 @@
         android:name="com.example.shoppingCart.member.TakePhoto"
         android:label="fragment_take_photo"
         tools:layout="@layout/fragment_take_photo" />
-    <fragment
-        android:id="@+id/camera"
-        android:name="com.example.shoppingCart.member.Camera"
-        android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
 </navigation>
