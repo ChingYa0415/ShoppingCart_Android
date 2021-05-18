@@ -20,4 +20,7 @@
     <string name="TakePhoto_textDescription">1.   如有穿戴眼鏡，請先拿下。 2.   拍照時請保持正臉。</string>
     <string name="TakePhoto_textComplete">完成註冊</string>
     <string name="TakePhoto_textSkipComplete">跳過，完成註冊</string>
+    <string name="Menu_textShoppingCart">購物車</string>
+    <string name="Products_textProducts">購物車內商品</string>
+    <string name="Homepage_textCategory">商品分類</string>
 </resources>

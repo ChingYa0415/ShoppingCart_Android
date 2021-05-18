@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/tbProducts"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="@string/TakePhoto_textFaceRecognition"></androidx.appcompat.widget.Toolbar>

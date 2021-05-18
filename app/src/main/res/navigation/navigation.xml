@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/login">
+    app:startDestination="@id/homepage">
 
     <fragment
         android:id="@+id/homepage"
@@ -48,4 +48,9 @@
         android:name="com.example.shoppingCart.member.TakePhoto"
         android:label="fragment_take_photo"
         tools:layout="@layout/fragment_take_photo" />
+    <fragment
+        android:id="@+id/products"
+        android:name="com.example.shoppingCart.products"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" />
 </navigation>
