@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link products#newInstance} factory method to
+ * Use the {@link ProductMenu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class products extends Fragment {
+public class ProductMenu extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class products extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public products() {
+    public ProductMenu() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class products extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment products.
+     * @return A new instance of fragment productMenu.
      */
     // TODO: Rename and change types and number of parameters
-    public static products newInstance(String param1, String param2) {
-        products fragment = new products();
+    public static ProductMenu newInstance(String param1, String param2) {
+        ProductMenu fragment = new ProductMenu();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class products extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false);
+        return inflater.inflate(R.layout.fragment_product_menu, container, false);
     }
 }

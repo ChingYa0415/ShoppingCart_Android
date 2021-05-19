@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_homepage_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_homepage_to_productMenu"
+            app:destination="@id/productMenu" />
+        <action
+            android:id="@+id/action_homepage_to_products"
+            app:destination="@id/shoppingcartProducts" />
     </fragment>
     <fragment
         android:id="@+id/userMember"
@@ -49,8 +55,13 @@
         android:label="fragment_take_photo"
         tools:layout="@layout/fragment_take_photo" />
     <fragment
-        android:id="@+id/products"
-        android:name="com.example.shoppingCart.products"
+        android:id="@+id/shoppingcartProducts"
+        android:name="com.example.shoppingCart.homepage.ShoppingcartProducts"
         android:label="fragment_products"
-        tools:layout="@layout/fragment_products" />
+        tools:layout="@layout/fragment_shoppingcart_products" />
+    <fragment
+        android:id="@+id/productMenu"
+        android:name="com.example.shoppingCart.ProductMenu"
+        android:label="fragment_product_menu"
+        tools:layout="@layout/fragment_product_menu" />
 </navigation>

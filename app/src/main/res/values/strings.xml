@@ -23,4 +23,8 @@
     <string name="Menu_textShoppingCart">購物車</string>
     <string name="Products_textProducts">購物車內商品</string>
     <string name="Homepage_textCategory">商品分類</string>
+    <string name="ShoppingCart_textPrice">價格：</string>
+    <string name="ShoppingCart_textCount">數量：</string>
+    <string name="Homepage_textFoodRecommend">食品推薦</string>
+    <string name="Homepage_textDrinkRecommend">飲料推薦</string>
 </resources>
