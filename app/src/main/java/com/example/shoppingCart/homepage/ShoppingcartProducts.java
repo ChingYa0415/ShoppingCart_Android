@@ -53,7 +53,7 @@ public class ShoppingcartProducts extends Fragment {
 
         rvProduct = view.findViewById(R.id.rvShoppingcartProducts);
 
-        rvProduct.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
+        rvProduct.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
 
         productList = getProductList();
         Log.d(TAG, "categoryList" + productList);

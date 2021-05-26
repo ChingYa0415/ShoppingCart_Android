@@ -36,7 +36,7 @@ public class Homepage extends Fragment {
     private final static String TAG = "TAG_Homepage";
     private final static String URL = RemoteAccess.URL_SERVER + "Homepage";
     private Activity activity;
-    private RecyclerView rvCategory, rvFoodRecommend, rvDrinkRecommend;
+    private RecyclerView rvCategory, rvFoodRecommend, rvDrinkRecommend, rvDailyNecessitiesRecommend;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,19 +60,23 @@ public class Homepage extends Fragment {
         rvCategory = view.findViewById(R.id.rvHomepageCategory);
         rvFoodRecommend = view.findViewById(R.id.rvHomepageFoodRecommend);
         rvDrinkRecommend = view.findViewById(R.id.rvHomepageDrinkRecommend);
+        rvDailyNecessitiesRecommend = view.findViewById(R.id.rvHomepageDailyNecessitiesRecommend);
 
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
 
         rvCategory.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         rvFoodRecommend.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         rvDrinkRecommend.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        rvDailyNecessitiesRecommend.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
 
         List<Category> categoryList = getCategoryList();
         List<Product> foodRecommendList = getFoodRecommendList();
         List<Product> drinkRecommendList = getDrinkRecommendList();
+        List<Product> dailyNecessitiesRecommendList = getDailyNecessitiesRecommendList();
         showCategoryList(categoryList);
         showFoodRecommendList(foodRecommendList);
         showDrinkRecommendList(drinkRecommendList);
+        showDailyNecessitiesRecommendList(dailyNecessitiesRecommendList);
     }
 
     public List<Category> getCategoryList() {
@@ -104,6 +108,17 @@ public class Homepage extends Fragment {
         drinkRecommendList.add(new Product(R.drawable.drink3, "黑松茶花", 25));
         drinkRecommendList.add(new Product(R.drawable.drink4, "分解茶", 25));
         return drinkRecommendList;
+    }
+
+    public List<Product> getDailyNecessitiesRecommendList() {
+        List<Product> dailyNecessitiesRecommendList = new ArrayList<>();
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities1, "肥皂", 100));
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities2, "沐浴乳", 110));
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities3, "衛生紙", 140));
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities4, "洗衣粉", 80));
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities5, "牙膏", 35));
+        dailyNecessitiesRecommendList.add(new Product(R.drawable.dailynecessities6, "牙刷", 30));
+        return dailyNecessitiesRecommendList;
     }
 
     public void showCategoryList(List<Category> categoryList) {
@@ -143,7 +158,19 @@ public class Homepage extends Fragment {
             drinkRecommendAdapter.setDrinkRecommendList(drinkRecommendList);
             drinkRecommendAdapter.notifyDataSetChanged();
         }
+    }
 
+    public void showDailyNecessitiesRecommendList(List<Product> dailyNecessitiesRecommendList) {
+        if (dailyNecessitiesRecommendList == null) {
+            Toast.makeText(activity, "showDailyNecessitiesRecommendList no network", Toast.LENGTH_LONG).show();
+        }
+        DailyNecessitiesRecommendAdapter dailyNecessitiesRecommendAdapter = (DailyNecessitiesRecommendAdapter) rvDailyNecessitiesRecommend.getAdapter();
+        if (dailyNecessitiesRecommendAdapter == null) {
+            rvDailyNecessitiesRecommend.setAdapter(new FoodRecommendAdapter(activity, dailyNecessitiesRecommendList));
+        } else {
+            dailyNecessitiesRecommendAdapter.setDailyNecessitiesRecommendList(dailyNecessitiesRecommendList);
+            dailyNecessitiesRecommendAdapter.notifyDataSetChanged();
+        }
     }
 
     public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
@@ -221,7 +248,7 @@ public class Homepage extends Fragment {
 
     }
 
-    public class FoodRecommendAdapter extends RecyclerView.Adapter<FoodRecommendAdapter.MyViewHolder> {
+    public static class FoodRecommendAdapter extends RecyclerView.Adapter<FoodRecommendAdapter.MyViewHolder> {
         private final Context context;
         private List<Product> foodRecommendList;
 
@@ -234,7 +261,7 @@ public class Homepage extends Fragment {
             this.foodRecommendList = foodRecommendList;
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder {
+        static class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView ivFoodRecommend;
             TextView tvFoodRecommendName, tvFoodRecommendPrice;
 
@@ -268,7 +295,7 @@ public class Homepage extends Fragment {
         }
     }
 
-    public class DrinkRecommendAdapter extends RecyclerView.Adapter<DrinkRecommendAdapter.MyViewHolder> {
+    public static class DrinkRecommendAdapter extends RecyclerView.Adapter<DrinkRecommendAdapter.MyViewHolder> {
         private final Context context;
         private List<Product> drinkRecommendList;
 
@@ -281,7 +308,7 @@ public class Homepage extends Fragment {
             this.drinkRecommendList = drinkRecommendList;
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder {
+        static class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView ivDrinkRecommend;
             TextView tvDrinkRecommendName, tvDrinkRecommendPrice;
 
@@ -312,6 +339,54 @@ public class Homepage extends Fragment {
         @Override
         public int getItemCount() {
             return drinkRecommendList.size();
+        }
+
+    }
+
+    public static class DailyNecessitiesRecommendAdapter extends RecyclerView.Adapter<DailyNecessitiesRecommendAdapter.MyViewHolder> {
+        private final Context context;
+        private List<Product> dailyNecessitiesRecommendList;
+
+        public DailyNecessitiesRecommendAdapter(Context context, List<Product> dailyNecessitiesRecommendList) {
+            this.context = context;
+            this.dailyNecessitiesRecommendList = dailyNecessitiesRecommendList;
+        }
+
+        public void setDailyNecessitiesRecommendList(List<Product> dailyNecessitiesRecommendList) {
+            this.dailyNecessitiesRecommendList = dailyNecessitiesRecommendList;
+        }
+
+        static class MyViewHolder extends RecyclerView.ViewHolder {
+            ImageView ivDailyNecessitiesRecommend;
+            TextView tvDailyNecessitiesRecommendName, tvDailyNecessitiesRecommendPrice;
+
+            public MyViewHolder(@NonNull View itemView) {
+                super(itemView);
+                ivDailyNecessitiesRecommend = itemView.findViewById(R.id.ivRecommend);
+                tvDailyNecessitiesRecommendName = itemView.findViewById(R.id.tvRecommendName);
+                tvDailyNecessitiesRecommendPrice = itemView.findViewById(R.id.tvRecommendPrice);
+            }
+        }
+
+        @NonNull
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(context).inflate(R.layout.homepage_cardview_recommend, parent, false);
+            return new MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull Homepage.DailyNecessitiesRecommendAdapter.MyViewHolder holder, int position) {
+            Product product = dailyNecessitiesRecommendList.get(position);
+
+            holder.ivDailyNecessitiesRecommend.setImageResource(product.getImageId());
+            holder.tvDailyNecessitiesRecommendName.setText(product.getName());
+            holder.tvDailyNecessitiesRecommendPrice.setText(String.valueOf(product.getPrice()));
+        }
+
+        @Override
+        public int getItemCount() {
+            return dailyNecessitiesRecommendList.size();
         }
 
     }
