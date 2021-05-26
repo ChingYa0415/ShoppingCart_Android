@@ -55,7 +55,7 @@ public class Homepage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         Toolbar toolbar = view.findViewById(R.id.tbHomepage);
         rvCategory = view.findViewById(R.id.rvHomepageCategory);
         rvFoodRecommend = view.findViewById(R.id.rvHomepageFoodRecommend);

@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_login_to_register"
             app:destination="@id/register" />
+        <action
+            android:id="@+id/action_login_to_photoLogin"
+            app:destination="@id/photoLogin" />
     </fragment>
     <fragment
         android:id="@+id/register"
@@ -64,4 +67,9 @@
         android:name="com.example.shoppingCart.ProductMenu"
         android:label="fragment_product_menu"
         tools:layout="@layout/fragment_product_menu" />
+    <fragment
+        android:id="@+id/photoLogin"
+        android:name="com.example.shoppingCart.member.PhotoLogin"
+        android:label="fragment_photo_login"
+        tools:layout="@layout/fragment_photo_login" />
 </navigation>
