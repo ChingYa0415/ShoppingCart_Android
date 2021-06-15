@@ -7,20 +7,17 @@ public class Member {
     private String account;
     private String password;
     private String nickname;
-    private int status;
     private Timestamp registerDatetime;
-    private Timestamp lastUpdateTime;
 
     public Member(String account, String password) {
         this.account = account;
         this.password = password;
     }
 
-    public Member(String account, String password, String nickname, int status) {
+    public Member(String account, String password, String nickname) {
         this.account = account;
         this.password = password;
         this.nickname = nickname;
-        this.status = status;
     }
 
     public int getId() {
@@ -55,14 +52,6 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public Timestamp getRegisterDatetime() {
         return registerDatetime;
     }
@@ -71,11 +60,4 @@ public class Member {
         this.registerDatetime = registerDatetime;
     }
 
-    public Timestamp getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime(Timestamp lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
-    }
 }

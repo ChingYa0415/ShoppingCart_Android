@@ -14,8 +14,9 @@ import java.util.concurrent.FutureTask;
 
 public class RemoteAccess {
     private static final String TAG = "TAG_RemoteAccess";
-    //    public static String URL_SERVER = "10.0.2.2:8080/";
-    public static String URL_SERVER = "192.168.0.1";
+//    public static String URL_SERVER = "http://10.0.2.2:8080/ShoppingCart/";
+
+    public static String URL_SERVER = "http://192.168.50.10:8080/ShoppingCart/";
 
     public static String getRemoteData(String url, String outStr) {
         JsonCallable jsonCallable = new JsonCallable(url, outStr);

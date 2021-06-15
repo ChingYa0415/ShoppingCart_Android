@@ -39,12 +39,12 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TakePhoto extends Fragment {
+public class TakePhoto extends Fragment implements View.OnClickListener {
     private static final String TAG = "TAG_TakePhotoFragment";
     private static final int REQ_TAKE_PICTURE_LARGE = 1;
     private Activity activity;
     private File file;
-    private Button btComplete;
+    private Button btTakePhoto, btComplete;
     private ImageView ivPhoto;
     private byte[] userPhoto;
     private Bundle bundle;
@@ -66,12 +66,18 @@ public class TakePhoto extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btTakePhoto = view.findViewById(R.id.btTakePhotoTakePhoto);
+        btTakePhoto = view.findViewById(R.id.btTakePhotoTakePhoto);
         btComplete = view.findViewById(R.id.btTakePhotoComplete);
         ivPhoto = view.findViewById(R.id.ivPhoto);
         bundle = getArguments();
 
-        btTakePhoto.setOnClickListener(v -> {
+        btTakePhoto.setOnClickListener(this);
+        btComplete.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btTakePhoto) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File dir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             if (dir != null && !dir.exists()) {
@@ -87,26 +93,14 @@ public class TakePhoto extends Fragment {
             try {
                 startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
             } catch (ActivityNotFoundException e) {
-                Toast.makeText(activity, "找不到camera app",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "找不到camera app", Toast.LENGTH_SHORT).show();
             }
-
-            /*
-            if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
-            } else {
-                Toast.makeText(activity, "找不到camera app", Toast.LENGTH_LONG).show();
-            }
-            */
-
-        });
-
-        btComplete.setOnClickListener(v -> {
+        } else if (v == btComplete) {
             if (RemoteAccess.networkConnected(activity)) {
-                String url = RemoteAccess.URL_SERVER + "RegisterServlet";
+                String url = RemoteAccess.URL_SERVER + "Member";
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("action", "MemberInsert");
-                jsonObject.addProperty("memberAccount", bundle.getString("account", null));
+                jsonObject.addProperty("action", "MemberImageInsert");
+                jsonObject.addProperty("account", bundle.getString("account", null));
                 if (userPhoto != null) {
                     jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
                     Log.d(TAG, "InsertImageBase64 SUCCESS!");
@@ -115,7 +109,7 @@ public class TakePhoto extends Fragment {
                 Log.d(TAG, "Insert result: " + result);
             }
             Navigation.findNavController(btComplete).navigate(R.id.login);
-        });
+        }
     }
 
     @Override
@@ -154,4 +148,5 @@ public class TakePhoto extends Fragment {
             }
         }
     }
+
 }

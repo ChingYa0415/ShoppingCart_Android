@@ -22,8 +22,8 @@ public class JsonCallable implements Callable<String> {
     }
 
     @Override
-    public String call() throws Exception {
-        return null;
+    public String call() {
+        return getData();
     }
 
     public String getData() {

@@ -91,9 +91,9 @@ public class Register extends Fragment {
             }
 
             if (RemoteAccess.networkConnected(activity)) {
-                String url = RemoteAccess.URL_SERVER + "RegisterServlet";
+                String url = RemoteAccess.URL_SERVER + "Member";
 
-                Member member = new Member(account, password, nickname, 1);
+                Member member = new Member(account, password, nickname);
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("action", "MemberInsert");
                 jsonObject.addProperty("member", new Gson().toJson(member));
@@ -101,28 +101,19 @@ public class Register extends Fragment {
                 String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
                 Log.d(TAG, "result: " + result);
 
-                /*
-                if (result.equals(null)) {
+                if (result == null) {
                     Toast.makeText(activity, "註冊失敗", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(activity, "註冊成功", Toast.LENGTH_LONG).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("account", account);
                     InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                    Navigation.findNavController(v).navigate(R.id.takePhoto);
+                    Navigation.findNavController(v).navigate(R.id.takePhoto, bundle);
                 }
-                */
-
-                Toast.makeText(activity, "註冊成功", Toast.LENGTH_LONG).show();
-                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("account", account);
-                Navigation.findNavController(v).navigate(R.id.takePhoto, bundle);
             } else {
                 Toast.makeText(activity, "沒有網路連線", Toast.LENGTH_LONG).show();
             }
-
         });
     }
 }
