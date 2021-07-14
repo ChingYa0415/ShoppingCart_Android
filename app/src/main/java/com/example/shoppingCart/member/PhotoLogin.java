@@ -51,11 +51,11 @@ public class PhotoLogin extends Fragment implements View.OnClickListener {
     private Activity activity;
     private File file;
     private ImageView ivPhoto;
-    private TextView tvLabelName, tvLabelAccuracy
+    private TextView tvLabelName, tvLabelAccuracy;
     private Button btTakePhotoTakePhoto, btTakePhotoComplete;
     private byte[] userPhoto;
     private String account;
-    private Bundle bundle;s
+    private Bundle bundle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,11 +82,6 @@ public class PhotoLogin extends Fragment implements View.OnClickListener {
 
         btTakePhotoTakePhoto.setOnClickListener(this);
         btTakePhotoComplete.setOnClickListener(this);
-
-        btTakePhotoComplete.setOnClickListener(v -> {
-            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.homepage);
-            Toast.makeText(activity, "歡迎回來，Ching", Toast.LENGTH_SHORT).show();
-        });
     }
 
     @Override
@@ -94,20 +89,24 @@ public class PhotoLogin extends Fragment implements View.OnClickListener {
         if (v == btTakePhotoTakePhoto) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File dir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
             if (dir != null && !dir.exists()) {
                 if (!dir.mkdirs()) {
                     Log.d(TAG, "DIRECTORY_PICTURES無法被創建");
                     return;
                 }
             }
+
             file = new File(dir, "picture.jpg");
             Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".provider", file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+
             try {
                 startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(activity, "找不到camera app", Toast.LENGTH_SHORT).show();
             }
+
 
             if (RemoteAccess.networkConnected(activity)) {
                 String url = RemoteAccess.URL_SERVER + "Member";
@@ -131,20 +130,23 @@ public class PhotoLogin extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "tvLabelAccuracy: " + accuracy);
             }
 
+
         } else if (v == btTakePhotoComplete) {
-            if (RemoteAccess.networkConnected(activity)) {
-                String url = RemoteAccess.URL_SERVER + "Member";
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("action", "MemberImageInsert");
-                jsonObject.addProperty("account", bundle.getString("account", null));
-                if (userPhoto != null) {
-                    jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
-                    Log.d(TAG, "InsertImageBase64 SUCCESS!");
-                }
-                String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
-                Log.d(TAG, "Insert result: " + result);
-            }
-            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.login);
+//            if (RemoteAccess.networkConnected(activity)) {
+//                String url = RemoteAccess.URL_SERVER + "Member";
+//                JsonObject jsonObject = new JsonObject();
+//                jsonObject.addProperty("action", "MemberImageInsert");
+//                jsonObject.addProperty("account", bundle.getString("account", null));
+//                if (userPhoto != null) {
+//                    jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
+//                    Log.d(TAG, "InsertImageBase64 SUCCESS!");
+//                }
+//                String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
+//                Log.d(TAG, "Insert result: " + result);
+//            }
+//            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.login);
+            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.homepage);
+            Toast.makeText(activity, "歡迎回來，" + tvLabelName.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 
