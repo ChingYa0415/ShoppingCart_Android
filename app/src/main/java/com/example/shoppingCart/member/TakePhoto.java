@@ -106,6 +106,7 @@ public class TakePhoto extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "InsertImageBase64 SUCCESS!");
                 }
                 String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
+
                 Log.d(TAG, "Insert result: " + result);
             }
             Navigation.findNavController(btComplete).navigate(R.id.login);
@@ -148,5 +149,4 @@ public class TakePhoto extends Fragment implements View.OnClickListener {
             }
         }
     }
-
 }

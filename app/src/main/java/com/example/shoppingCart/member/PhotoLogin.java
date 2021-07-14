@@ -26,28 +26,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shoppingCart.R;
 import com.example.shoppingCart.network.RemoteAccess;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
-public class PhotoLogin extends Fragment {
+public class PhotoLogin extends Fragment implements View.OnClickListener {
     private static final String TAG = "TAG_PhotoLoginFragment";
     private static final int REQ_TAKE_PICTURE_LARGE = 1;
     private Activity activity;
     private File file;
-    private ImageView ivPhotoLogin;
-    private Button btPhotoLogin2;
+    private ImageView ivPhoto;
+    private TextView tvLabelName, tvLabelAccuracy
+    private Button btTakePhotoTakePhoto, btTakePhotoComplete;
     private byte[] userPhoto;
     private String account;
+    private Bundle bundle;s
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,50 +73,79 @@ public class PhotoLogin extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivPhotoLogin = view.findViewById(R.id.ivPhotoLogin);
-        btPhotoLogin2 = view.findViewById(R.id.btPhotoLogin2);
-        Bundle bundle = getArguments();
+        btTakePhotoTakePhoto = view.findViewById(R.id.btTakePhotoTakePhoto);
+        btTakePhotoComplete = view.findViewById(R.id.btTakePhotoComplete);
+        ivPhoto = view.findViewById(R.id.ivPhoto);
+        tvLabelName = view.findViewById(R.id.tvLabelName);
+        tvLabelAccuracy = view.findViewById(R.id.tvLabelAccuracy);
+        bundle = getArguments();
 
-        if (bundle != null) {
-            account = bundle.getString("account", null);
-        }
+        btTakePhotoTakePhoto.setOnClickListener(this);
+        btTakePhotoComplete.setOnClickListener(this);
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File dir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (dir != null && !dir.exists()) {
-            if (!dir.mkdirs()) {
-                Log.d(TAG, "DIRECTORY_PICTURES無法被創建");
-                return;
-            }
-        }
-        file = new File(dir, "picture.jpg");
-        Uri contentUri = FileProvider.getUriForFile(activity,
-                activity.getPackageName() + ".provider", file);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
-        try {
-            startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, "找不到camera app",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        if (RemoteAccess.networkConnected(activity)) {
-            String url = RemoteAccess.URL_SERVER + "RegisterServlet";
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("action", "MemberInsert");
-            jsonObject.addProperty("memberAccount", account);
-            if (userPhoto != null) {
-                jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
-                Log.d(TAG, "InsertImageBase64 SUCCESS!");
-            }
-            String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
-            Log.d(TAG, "Insert result: " + result);
-        }
-
-        btPhotoLogin2.setOnClickListener(v -> {
-            Navigation.findNavController(ivPhotoLogin).navigate(R.id.homepage);
+        btTakePhotoComplete.setOnClickListener(v -> {
+            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.homepage);
             Toast.makeText(activity, "歡迎回來，Ching", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btTakePhotoTakePhoto) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File dir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            if (dir != null && !dir.exists()) {
+                if (!dir.mkdirs()) {
+                    Log.d(TAG, "DIRECTORY_PICTURES無法被創建");
+                    return;
+                }
+            }
+            file = new File(dir, "picture.jpg");
+            Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".provider", file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+            try {
+                startActivityForResult(intent, REQ_TAKE_PICTURE_LARGE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(activity, "找不到camera app", Toast.LENGTH_SHORT).show();
+            }
+
+            if (RemoteAccess.networkConnected(activity)) {
+                String url = RemoteAccess.URL_SERVER + "Member";
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("action", "MemberPhotoLogin");
+
+//                if (userPhoto != null) {
+//                    jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
+//                    Log.d(TAG, "InsertImageBase64 SUCCESS!");
+//                }
+                String jsonIn = RemoteAccess.getRemoteData(url, jsonObject.toString());
+                Map<String, Object> retMap = new Gson().fromJson(jsonIn, new TypeToken<HashMap<String, Object>>(){}.getType());
+
+                String label = (String) retMap.get("Label");
+                double accuracy = (double) retMap.get("Accuracy");
+
+                tvLabelName.setText(label);
+                tvLabelAccuracy.setText(NumberFormat.getNumberInstance().format(accuracy));
+
+                Log.d(TAG, "tvLabelName: " + label);
+                Log.d(TAG, "tvLabelAccuracy: " + accuracy);
+            }
+
+        } else if (v == btTakePhotoComplete) {
+            if (RemoteAccess.networkConnected(activity)) {
+                String url = RemoteAccess.URL_SERVER + "Member";
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("action", "MemberImageInsert");
+                jsonObject.addProperty("account", bundle.getString("account", null));
+                if (userPhoto != null) {
+                    jsonObject.addProperty("InsertImageBase64", Base64.encodeToString(userPhoto, Base64.DEFAULT));
+                    Log.d(TAG, "InsertImageBase64 SUCCESS!");
+                }
+                String result = RemoteAccess.getRemoteData(url, jsonObject.toString());
+                Log.d(TAG, "Insert result: " + result);
+            }
+            Navigation.findNavController(btTakePhotoComplete).navigate(R.id.login);
+        }
     }
 
     @Override
@@ -136,7 +173,7 @@ public class PhotoLogin extends Fragment {
                     ImageDecoder.Source source = ImageDecoder.createSource(file);
                     try {
                         Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
-                        ivPhotoLogin.setImageBitmap(bitmap);
+                        ivPhoto.setImageBitmap(bitmap);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                         userPhoto = stream.toByteArray();
@@ -147,4 +184,6 @@ public class PhotoLogin extends Fragment {
             }
         }
     }
+
+
 }

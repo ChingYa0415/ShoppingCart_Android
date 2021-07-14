@@ -9,7 +9,7 @@
     <string name="Login_textShoppingCart">智慧商場</string>
     <string name="Login_textLogin">登入</string>
     <string name="Login_textSignUp">註冊</string>
-    <string name="Login_textPhotoLogin">臉部辨識登入</string>
+    <string name="Login_textPhotoLogin">人臉辨識登入</string>
     <string name="Register_textNext">下一步</string>
     <string name="Register_textCancel">取消</string>
     <string name="Register_textMemberRegister">會員註冊</string>
@@ -29,4 +29,6 @@
     <string name="Homepage_textFoodRecommend">食品推薦</string>
     <string name="Homepage_textDrinkRecommend">飲料推薦</string>
     <string name="Homepage_textDailyNecessitiesRecommend">生活用品推薦</string>
+    <string name="tvUserName">使用者名稱：</string>
+    <string name="tvNameAccuracy">準確率：</string>
 </resources>
